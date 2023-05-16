@@ -102,16 +102,14 @@ Route::get('/shortroute', function() {
 });
 
 
-
-
 // route nhóm, tiền tế
-Route::prefix('user')->name('u.')->group(function () {
+Route::prefix('user')->name('user.')->group(function () {
     Route::get('profile', function () {
         return 'profile';
     })->name('profile');
 
     Route::get('setting', function () {
-        return 'setting';
+        return Route::currentRouteName();
     })->name('setting');
 
     Route::get('details', function () {
