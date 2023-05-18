@@ -1,6 +1,11 @@
 <?php
 namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\UploadedFile;
 
 
 /*
@@ -18,12 +23,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('admin/routes', 'HomeController@admin')->middleware('admin');
+Route::get('/addproduct', function () {
+    return view('addProduct');
+});
 
-Route::get('role',[
-   'middleware' => 'test:editor',
-   'user' => [TestController::class, 'index'],
-]);
+Route::get('foo/role', [TestController::class, 'index'])->middleware('Test:user');
+
+// product form
+Route::post('/product', [TestController::class, 'productStore']);
+
+Route::get('/login', function () {
+    return view('loginform');
+});
+
+Route::post('/loginhandle', [TestController::class, 'login']);
 
 // using FastCGI
 Route::get('file', [TestController::class, 'index'])->middleware('terminate');
@@ -40,7 +53,6 @@ Route::any('/any', function() {
 
 
 // Dependency Injection?
-use Illuminate\Http\Request;
 Route::get('/users', function (Request $request) {
     return $request;
 });
