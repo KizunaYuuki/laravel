@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 
 class TestController extends Controller
@@ -51,27 +53,65 @@ class TestController extends Controller
         // echo $file;
 
         // dd($request);
-        DB::insert('insert into users (description, imagePath) values (?, ?)', ["$description", "$storedPath"]);
+        // dd($request->all());
+
+        DB::insert('insert into image (description, imagePath) values (?, ?)', ["$description", "$storedPath"]);
         // return upload image
         // return;
     }
 
-    public function login(Request $request): RedirectResponse
+    // not complete
+    public function login(Request $request)
     {
 
         $credentials = [
-            "email" => $request->email,
-            "password" => $request->password,
+            "email" => $request->input('email'),
+            "password" => $request->input('password'),
         ];
-        dd($request);
+        // dd(bcrypt($request->password));
         if (Auth::attempt($credentials)) {
+
             $request->session()->regenerate();
- 
-            return redirect()->intended('');
+            return redirect()->intended('/dfsdfdsf');
         }
  
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
         ])->onlyInput('email');
+    }
+
+    public function logout() {
+        Auth::logout();
+        return to_route('login');
+    }
+
+    public function formvalidate(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'name' => ['required', 
+            Rule::in(['admin', 'user'])
+        ],
+            'email' => 'required',
+            'password' => 'required_if:name,admin',
+            'randomnumber' => 'numeric|min:18',
+
+            // image validation
+            'image' => 'dimensions:min_width=10000,min_height=200',
+            // 'birthdate' => 'before:' . now()->toDateString(),
+            // 'birthdate' => 'before:today',
+
+        ]);
+
+        // ?
+        // Validator::make($data, [
+        //     'image' => [
+        //         'required',
+        //         Rule::dimensions()->maxWidth(1000)->maxHeight(500)->ratio(3 / 2),
+        //     ],
+        // ]);
+    
+        // The blog post is valid...
+    
+        return to_route('/');
     }
 }

@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    @include('cdn')
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Laravel</title>
+        <!-- <title>Laravel</title> -->
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+        <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous"> -->
         <!-- Styles -->
         <style>
             img {
@@ -44,19 +45,116 @@
 
         <div class="d-flex justify-content-center">
             <?php
-                $users = DB::select('select * from users');
-                foreach ($users as $user) {
+                $image = DB::select('select * from image');
+                foreach ($image as $item) {
                     // echo $user->description;
-                    $imagePath = $user->description;
+                    $imagePath = $item->imagePath;
                     echo    '
                                 <div class="card m-2" style="width: 18rem;"> 
-                                    <img src="'.$user->imagePath.'" class="card-img-top" alt="...">
-                                    <div class="card-body">'.$user->description.'</div>
+                                    <img src="'.$item->imagePath.'" class="card-img-top" alt="...">
+                                    <div class="card-body">'.$item->description.'</div>
                                 </div>
                             ';
-                }         
+                }        
+                $view = "<br/><strong>hello world<strong>";
             ?>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+        <div>
+            <!-- {{ $view }}
+            {!! $view !!}
+            
+            @if (false) {
+                return 'viewport'
+            } -->
+            
+            <!-- Comment in Blade Templates  -->
+            {{-- This comment will not be present in the rendered HTML --}}
+            @endif
+        </div>
+        <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script> -->
+<!-- 
+    @verbatim
+        <div>view</div>
+    @endverbatim
+    Hello, @{{ $view }}
+            
+
+        <?php 
+            $records = -1
+        ?>
+        @if ($records === 1)
+            I have one record!
+        @elseif ($records > 1)
+            I have multiple records!
+        @else
+            I don't have any records!
+        @endif
+
+        @unless (!true)
+            You are not signed in.
+        @endunless
+
+
+        @production
+            Production specific content...
+        @endproduction
+
+        @for ($i = 0; $i < 10; $i++)
+            The current value is {{ $i }} <br>
+        @endfor
+
+        <x-todo>
+            <x-slot name="title">
+                Custom Title
+            </x-slot>
+            @foreach ($tasks as $task)
+                <h3>{{ $task['name'] }}</h3>
+            @endforeach
+        </x-todo> -->
+
+
+{{-- --}}
+        @extends('layouts.app')
+
+        @section('title', 'Page Title')
+
+        @section('sidebar')
+            @parent
+
+            <p>This is appended to the master sidebar.</p>
+        @endsection
+
+        @section('content')
+            <p>This is my body content.</p>
+        @endsection        
+        @push('scripts', '<script>alert("Hello!")</script>')
+
+
+        @prepend('scripts')<h1>Push & Stack</h1>
+            <script>
+                alert("Hello again!")
+            </script>
+            
+        @endprepend
+
+        {{-- HTML form không hỗ trợ method PUT, PATCH, DELETE. Dùng @method('methodName') để dùng PUT, PATCH, DELETE--}}
+
+        {{-- <form action="/foo/bar" method="POST">
+            @method('PUT') 
+            <label for="title">Post Title</label>
+
+            <input id="title" type="text" class="@error('title') is-invalid @enderror">
+
+            @error('title')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror --}}
+        
+        </form>
+        @php
+        $message = "Toidicode.com";
+        @endphp
+
+        {{ $message }}
+        <h1>@datetime(now())</h1>
     </body>
 </html>

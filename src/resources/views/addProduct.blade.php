@@ -16,8 +16,6 @@
         <form method="POST" action="/product" enctype="multipart/form-data">
             @csrf
 
-            <label for="id">Id</label><br>
-            <input type="text" id="id" name="id"><br>
             <label for="description">Description</label><br>
             <input type="text" id="description" name="description"><br>
             
@@ -29,5 +27,6 @@
 
         </form> 
         <!-- <img src="{{ asset('images/12.png') }}" alt="description"> -->
+        Hello, {{ $paramtranfer }}!
     </body>
 </html>

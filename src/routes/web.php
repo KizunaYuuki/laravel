@@ -19,12 +19,27 @@ use Illuminate\Http\UploadedFile;
 |
 */
 
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
 Route::get('/', function () {
-    return view('welcome');
+    $tasks = [
+        ['name' => 'Task 1'],
+        ['name' => 'Task 2'],
+        ['name' => 'Task 3'],
+        ['name' => 'Task 4'],
+    ];
+
+    return view('welcome', ['tasks' => $tasks]);
 });
 
 Route::get('/addproduct', function () {
-    return view('addProduct');
+    return view('addProduct', ['paramtranfer' => "Lò Thị Vi Sóng"]);
+});
+
+Route::get('/returnarray', function () {
+    return [1, 2, 3];
 });
 
 Route::get('foo/role', [TestController::class, 'index'])->middleware('Test:user');
@@ -37,6 +52,8 @@ Route::get('/login', function () {
 });
 
 Route::post('/loginhandle', [TestController::class, 'login']);
+// Route::post('/loginhandle', [TestController::class, 'formvalidate']);
+
 
 // using FastCGI
 Route::get('file', [TestController::class, 'index'])->middleware('terminate');
