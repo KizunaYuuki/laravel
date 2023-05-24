@@ -20,6 +20,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Test Create directive
         Blade::directive('datetime', function ($expression) {
             return "<?php echo ($expression)->format('d-m-y h:i'); ?>";
         });

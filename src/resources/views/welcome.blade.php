@@ -57,6 +57,14 @@
                             ';
                 }        
                 $view = "<br/><strong>hello world<strong>";
+                
+
+
+                // $users = DB::select('select * from users');
+                $users = DB::select('select * from users where id = :id', ['id' => 2]);
+                foreach ($users as $item) {
+                    echo "ID " . "$item->id";
+                }
             ?>
         </div>
         <div>
@@ -113,7 +121,7 @@
         </x-todo> -->
 
 
-{{-- --}}
+{{-- 
         @extends('layouts.app')
 
         @section('title', 'Page Title')
@@ -135,7 +143,7 @@
                 alert("Hello again!")
             </script>
             
-        @endprepend
+        @endprepend --}}
 
         {{-- HTML form không hỗ trợ method PUT, PATCH, DELETE. Dùng @method('methodName') để dùng PUT, PATCH, DELETE--}}
 

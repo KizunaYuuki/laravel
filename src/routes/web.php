@@ -42,6 +42,13 @@ Route::get('/returnarray', function () {
     return [1, 2, 3];
 });
 
+Route::get('/response', function () {
+    $pathToFile = public_path('images/iphone-14-pro-model-unselect-gallery-2-202209.jpeg');
+    // echo $pathToFile;
+    // return response('Hello World', 200)->header('Content-Type', 'text/plain');
+    return response()->file($pathToFile);
+});
+
 Route::get('foo/role', [TestController::class, 'index'])->middleware('Test:user');
 
 // product form

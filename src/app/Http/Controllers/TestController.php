@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
 
+use Illuminate\View\View;
+
+
 class TestController extends Controller
 {
    public function index(Request $request) {
@@ -113,5 +116,12 @@ class TestController extends Controller
         // The blog post is valid...
     
         return to_route('/');
+    }
+
+    public function testDataBase(): View
+    {
+        $users = DB::select('select * from users where active = ?', [1]);
+ 
+        return view('user.index', ['users' => $users]);
     }
 }
