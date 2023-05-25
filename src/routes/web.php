@@ -6,6 +6,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Session;
 
 
 /*
@@ -41,6 +43,47 @@ Route::get('/addproduct', function () {
 Route::get('/returnarray', function () {
     return [1, 2, 3];
 });
+
+Route::get('/session', function (Request $request) {
+    // dd($request);
+
+    // Sesson Save
+    session()->put('Test', 'TestValue');
+    // Session::put("cart.products", [['id' => 1, 'item' => 1]]);
+
+    // Add data into Session 
+    // Session::push("cart.products", ['id' => 2, 'item' => 1]);
+
+    // Take data and delete data in Session
+    Session::pull("cart.products", 'Default Value');
+
+    // Forget a single key in Session 
+    $request->session()->forget('cart.products');
+
+    // Forget multiple keys...
+    $request->session()->forget(['name', 'status']);
+
+    // Delete Session 
+    // $request->session()->flush();
+
+    // Reset session ID
+    // echo $request->session()->regenerate();
+
+    // Change session ID and Delete session data
+    // echo $request->session()->invalidate();
+
+
+    dd(Session::all());
+    return 'Home page with Signed URL';
+});
+
+Route::get('/home', function (Request $request) {
+    dd($request);
+    if (!$request->hasValidSignature()) {
+        abort(401);
+    }
+    return 'Home page with Signed URL';
+})->name('home')->middleware('signed');
 
 Route::get('/response', function () {
     $pathToFile = public_path('images/iphone-14-pro-model-unselect-gallery-2-202209.jpeg');

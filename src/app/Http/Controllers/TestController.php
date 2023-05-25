@@ -36,6 +36,9 @@ class TestController extends Controller
         // Usage of url method
         $url = $request->url();
         echo 'URL method: '.$url;
+
+        $urlAction = action([TestController::class, 'index'], ['id' => 1]);
+        echo $urlAction;
    }
 
     public function productStore(Request $request)
