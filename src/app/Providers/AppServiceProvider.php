@@ -26,16 +26,16 @@ class AppServiceProvider extends ServiceProvider
             return "<?php echo ($expression)->format('d-m-y h:i'); ?>";
         });
 
-        // Listening For Query Events
+        // // Listening For Query Events
         // DB::listen(function (QueryExecuted $query) {
         //     // $query->sql;
         //     // $query->bindings;
         //     // $query->time;
         // });
 
-        // Monitoring Cumulative Query Time
-        DB::whenQueryingForLongerThan(500, function (Connection $connection, QueryExecuted $event) {
-            // Notify development team...
-        });
+        // // Monitoring Cumulative Query Time
+        // DB::whenQueryingForLongerThan(500, function (Connection $connection, QueryExecuted $event) {
+        //     // Notify development team...
+        // });
     }
 }

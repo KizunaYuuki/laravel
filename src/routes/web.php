@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Artisan;
+
+
 
 
 /*
@@ -38,6 +41,13 @@ Route::get('/', function () {
 
 Route::get('/addproduct', function () {
     return view('addProduct', ['paramtranfer' => "Lò Thị Vi Sóng"]);
+});
+
+Route::get('/artisan', function()
+{
+    // Artisan::call('make:migration Test', []);
+    Artisan::call('list', []);
+    return Artisan::output();
 });
 
 Route::get('/returnarray', function () {
@@ -75,6 +85,25 @@ Route::get('/session', function (Request $request) {
 
     dd(Session::all());
     return 'Home page with Signed URL';
+});
+
+
+use App\Models\Post;
+Route::get('/onetomany', function() {
+ 
+    $comments = Post::find(1)->comments;
+    
+    foreach ($comments as $comment) {
+        echo $comment;
+        echo "<br/>";
+    }
+    return;
+});
+
+use App\Models\Comment;
+Route::get('/inverse-onetomany', function() {
+    $comment = Comment::find(1);
+    return $comment->post;
 });
 
 Route::get('/home', function (Request $request) {

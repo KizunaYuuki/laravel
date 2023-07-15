@@ -58,19 +58,24 @@
                 }
                 $view = "<br/><strong>hello world<strong>";
 
+                use App\Models\User;
+                
 
+                DB::insert('insert into users () values ()', []);
+                DB::insert('insert into phones (user_id) values (?)', [1]);
+                echo User::find(9);
 
                 // $users = DB::select('select * from users');
-                $users = DB::select('select * from users where id >= :id', ['id' >= 0]);
+                // $users = DB::select('select * from users where id >= :id', ['id' >= 0]);
                 
                 // Insert data into MySQL
                 // DB::insert('insert into users (email, password) values (?, ?)', ['Marc2@', 'Secret']);
 
                 // Update data into MySQL
-                $affected = DB::update(
-                    'update users set password = 52542 where email = ?',
-                    ['Marc']
-                );
+                // $affected = DB::update(
+                //     'update users set password = 52542 where email = ?',
+                //     ['Marc']
+                // );
 
                 // Delete data into MySQL
                 // $deleted = DB::delete('delete from users');
@@ -81,7 +86,7 @@
                 // Running An Unprepared Statement
                 // DB::unprepared('update users set password = 1000 where email = "time0009000"');
 
-                dd($users);
+                // dd($users);
                 
                 // foreach ($users as $item) {
                 //     echo "ID " . "$item->id" . "<br/>";
